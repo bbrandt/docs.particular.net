@@ -7,7 +7,7 @@ tags:
 
 ## Code walk-through
 
-Illustrates how to configure logging using the [profiles](/nservicebus/profiles-for-nservicebus-host.md) functionality of the NServiceBus host.
+Illustrates how to configure logging using the [profiles](/nservicebus/hosting/nservicebus-host/profiles.md) functionality of the NServiceBus host.
 
 ### Logging helper
 
@@ -30,3 +30,7 @@ Inside the `LoggingHandlers` directory there are `IConfigureLoggingForProfile`s 
 #### Production
 
 <!-- import ProductionHandler --> 
+
+## More Info
+
+ * [Logging in NServiceBus](/nservicebus/logging/)

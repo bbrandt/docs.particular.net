@@ -3,7 +3,6 @@ title: Message Mutators
 summary: 'Change messages by plugging custom logic in to a couple of interfaces, encrypting as required. '
 tags:
 - Mutator
-- Changing message content
 redirects:
 - nservicebus/nservicebus-message-mutators-sample
 ---
@@ -75,7 +74,7 @@ In the TransportMessageCompressionMutator class, both the incoming and outgoing 
 
 This mutator is acting on all transport messages, regardless of what message types the transport message carries.
 
-The compression code is straightforward and utilizes the .NET framework [GZipStream](http://msdn.microsoft.com/en-us/library/system.io.compression.gzipstream.aspx) class to do the compression.
+The compression code is straightforward and utilizes the .NET framework [GZipStream](https://msdn.microsoft.com/en-us/library/system.io.compression.gzipstream.aspx) class to do the compression.
 
 After the compression is done, the compressed array is placed back in the transport message Body property.
 

@@ -5,22 +5,26 @@ using System.Reactive.Linq;
 using NServiceBus;
 using NServiceBus.Faults;
 #region SubscribeToErrorsNotifications
-public class SubscribeToErrorsNotifications : IWantToRunWhenBusStartsAndStops
+public class SubscribeToErrorsNotifications : IWantToRunWhenBusStartsAndStops, IDisposable
 {
     BusNotifications busNotifications;
+	List<IDisposable> unsubscribeStreams = new List<IDisposable>();
+	bool disposed;
 
-    public SubscribeToErrorsNotifications(BusNotifications busNotifications)
+	public SubscribeToErrorsNotifications(BusNotifications busNotifications)
     {
         this.busNotifications = busNotifications;
     }
 
-    public void Start()
+	public void Start()
     {
-        unsubscribeStreams.Add(
+		CheckIfDisposed();
+
+		unsubscribeStreams.Add(
             busNotifications.Errors.MessageSentToErrorQueue
                 // It is very important to handle streams on another thread
                 // otherwise the system performance can be impacted
-                .SubscribeOn(System.Reactive.Concurrency.Scheduler.Default) // Uses a pool-based scheduler
+                .ObserveOn(System.Reactive.Concurrency.Scheduler.Default) // Uses a pool-based scheduler
                 .Subscribe(SendEmailOnFailure)
             );
 
@@ -32,18 +36,21 @@ public class SubscribeToErrorsNotifications : IWantToRunWhenBusStartsAndStops
 
     public void Stop()
     {
-        foreach (var unsubscribeStream in unsubscribeStreams)
+		CheckIfDisposed();
+
+        foreach (IDisposable unsubscribeStream in unsubscribeStreams)
         {
             unsubscribeStream.Dispose();
         }
+		unsubscribeStreams.Clear();
     }
 
     void SendEmailOnFailure(FailedMessage failedMessage)
     {
-        using (var c = new SmtpClient())
+        using (SmtpClient c = new SmtpClient())
         {
 
-            using (var mailMessage = new MailMessage("from@mail.com",
+            using (MailMessage mailMessage = new MailMessage("from@mail.com",
                 "to@mail.com", "Message sent to error queue",
                 failedMessage.Exception.ToString()))
             {
@@ -60,7 +67,17 @@ public class SubscribeToErrorsNotifications : IWantToRunWhenBusStartsAndStops
         }
     }
 
-    List<IDisposable> unsubscribeStreams = new List<IDisposable>();
+	void CheckIfDisposed()
+	{
+		if (disposed)
+			throw new Exception("Object has been disposed.");
+    }
+
+	public void Dispose()
+	{
+		Stop();
+		disposed = true;
+    }
 }
 
 #endregion

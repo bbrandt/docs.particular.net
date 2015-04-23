@@ -23,7 +23,7 @@ ServiceControl is configured to use MSMQ as the out of the box transport. Even i
       
 To enabling and configuring MSMQ without the Platform Installer refer to the MSMQ section off [Installing The Platform Components Manually](/platform/installer/offline.md#msmq)
 
-Alternatively, if [Chocolatey](http://chocolatey.org) is installed you can install and configure MSMQ by running the following Chocolatey command:
+Alternatively, if [Chocolatey](https://chocolatey.org) is installed you can install and configure MSMQ by running the following Chocolatey command:
 
 	cinst NServicebus.Msmq.install
 
@@ -32,7 +32,7 @@ ServiceControl reports metrics via the NServiceBus Performance Counters.
       
 For instructions on how to install the Performance Counters without the Platform Installer refer to [Installing The Platform Components Manually](/platform/installer/offline.md)
 
-Alternatively, if [Chocolatey](http://chocolatey.org) is installed you can install the performance counters running the following Chocolatey command:
+Alternatively, if [Chocolatey](https://chocolatey.org) is installed you can install the performance counters running the following Chocolatey command:
 
 	cinst NServicebus.PerfCounters.install
 
@@ -55,6 +55,14 @@ The ForwardAuditMessages command line property is not mandatory if an upgrade is
 Passing the ForwardAuditMessages property has no affect when the installer is not running silently  
 
 NOTE: It is recommended to enable logging when running in silent mode as error messages are suppressed. See Troubleshooting 
+
+#### Silent UnInstallation
+
+The following command can be used to uninstall ServiceControl silently:
+
+```bat
+wmic product where (name like '%servicecontrol%') call uninstall
+```
 
 #### Troubleshooting 
 

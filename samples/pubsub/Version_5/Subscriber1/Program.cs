@@ -1,17 +1,19 @@
 using System;
 using NServiceBus;
+using NServiceBus.Logging;
 
 static class Program
 {
 
     static void Main()
     {
-        var busConfiguration = new BusConfiguration();
-        busConfiguration.EndpointName("Sample.PubSub.Subscriber1");
+        LogManager.Use<DefaultFactory>().Level(LogLevel.Info);
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.EndpointName("Samples.PubSub.Subscriber1");
         busConfiguration.UseSerialization<JsonSerializer>();
         busConfiguration.UsePersistence<InMemoryPersistence>();
         busConfiguration.EnableInstallers();
-        var startableBus = Bus.Create(busConfiguration);
+        IStartableBus startableBus = Bus.Create(busConfiguration);
         using (startableBus.Start())
         {
             Console.WriteLine("To exit, Ctrl + C");

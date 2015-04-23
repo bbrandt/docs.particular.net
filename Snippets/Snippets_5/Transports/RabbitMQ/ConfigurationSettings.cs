@@ -1,6 +1,8 @@
-﻿using global::RabbitMQ.Client;
+﻿using System;
+using global::RabbitMQ.Client;
 using NServiceBus;
 using NServiceBus.Transports.RabbitMQ;
+using NServiceBus.Transports.RabbitMQ.Routing;
 
 public class RabbitMQConfigurationSettings
 {
@@ -8,8 +10,8 @@ public class RabbitMQConfigurationSettings
     {
         #region rabbitmq-config-basic 2
 
-        var configuration = new BusConfiguration();
-        configuration.UseTransport<RabbitMQTransport>();
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<RabbitMQTransport>();
 
         #endregion
     }
@@ -18,8 +20,8 @@ public class RabbitMQConfigurationSettings
     {
         #region rabbitmq-config-connectionstring-in-code 2
 
-        var configuration = new BusConfiguration();
-        configuration.UseTransport<RabbitMQTransport>()
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<RabbitMQTransport>()
             .ConnectionString("My custom connection string");
 
         #endregion
@@ -29,8 +31,8 @@ public class RabbitMQConfigurationSettings
     {
         #region rabbitmq-config-connectionstringname 2
 
-        var configuration = new BusConfiguration();
-        configuration.UseTransport<RabbitMQTransport>()
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<RabbitMQTransport>()
             .ConnectionStringName("MyConnectionStringName");
 
         #endregion
@@ -41,8 +43,8 @@ public class RabbitMQConfigurationSettings
     {
         #region rabbitmq-config-disablecallbackreceiver 2
 
-        var configuration = new BusConfiguration();
-        configuration.UseTransport<RabbitMQTransport>()
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<RabbitMQTransport>()
             .DisableCallbackReceiver();
 
         #endregion
@@ -53,8 +55,8 @@ public class RabbitMQConfigurationSettings
     {
         #region rabbitmq-config-callbackreceiver-thread-count 2
 
-        var configuration = new BusConfiguration();
-        configuration.UseTransport<RabbitMQTransport>()
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<RabbitMQTransport>()
             .CallbackReceiverMaxConcurrency(10);
 
         #endregion
@@ -63,8 +65,8 @@ public class RabbitMQConfigurationSettings
     {
         #region rabbitmq-config-custom-id-strategy 2.1
 
-        var configuration = new BusConfiguration();
-        configuration.UseTransport<RabbitMQTransport>()
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<RabbitMQTransport>()
             .CustomMessageIdStrategy(deliveryArgs => 
                 deliveryArgs.BasicProperties.Headers["MyCustomId"].ToString());
 
@@ -74,28 +76,93 @@ public class RabbitMQConfigurationSettings
     {
         #region rabbitmq-config-useconnectionmanager 2
 
-        var configuration = new BusConfiguration();
-        configuration.UseTransport<RabbitMQTransport>()
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<RabbitMQTransport>()
             .UseConnectionManager<MyConnectionManager>();
 
         #endregion
     }
 
+    void UseDirectRoutingTopology()
+    {
+        #region rabbitmq-config-usedirectroutingtopology 2
+
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<RabbitMQTransport>()
+            .UseDirectRoutingTopology();
+
+        #endregion
+    }
+
+    void UseDirectRoutingTopologyWithCustomConventions()
+    {
+        #region rabbitmq-config-usedirectroutingtopologywithcustomconventions 2
+
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<RabbitMQTransport>()
+            .UseDirectRoutingTopology(MyRoutingKeyConvention,(address,eventType) => "MyTopic");
+
+        #endregion
+    }
+
+    string MyRoutingKeyConvention(Type type)
+    {
+        throw new NotImplementedException();
+    }
+
+    void UseRoutingTopology()
+    {
+        #region rabbitmq-config-useroutingtopology 2
+
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<RabbitMQTransport>()
+            .UseRoutingTopology<MyRoutingTopology>();
+
+        #endregion
+    }
+    class MyRoutingTopology : IRoutingTopology
+    {
+        public void SetupSubscription(IModel channel, Type type, string subscriberName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TeardownSubscription(IModel channel, Type type, string subscriberName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Publish(IModel channel, Type type, TransportMessage message, IBasicProperties properties)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Send(IModel channel, Address address, TransportMessage message, IBasicProperties properties)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Initialize(IModel channel, string main)
+        {
+            throw new NotImplementedException();
+        }
+    }
     class MyConnectionManager : IManageRabbitMqConnections
     {
         public IConnection GetPublishConnection()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public IConnection GetConsumeConnection()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public IConnection GetAdministrationConnection()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
+

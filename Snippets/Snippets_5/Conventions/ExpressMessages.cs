@@ -6,9 +6,9 @@ public class ExpressMessages
     {
         #region ExpressMEssageConvention
 
-        var configuration = new BusConfiguration();
+        BusConfiguration busConfiguration = new BusConfiguration();
 
-        configuration.Conventions().DefiningExpressMessagesAs(t => t.Name.EndsWith("Express"));
+        busConfiguration.Conventions().DefiningExpressMessagesAs(t => t.Name.EndsWith("Express"));
 
         #endregion
     }

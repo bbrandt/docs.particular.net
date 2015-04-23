@@ -7,12 +7,12 @@
     {
         public void ConfigurePropertyInjectionForHandler()
         {
-            var configuration = new BusConfiguration();
+            BusConfiguration busConfiguration = new BusConfiguration();
 
             #region ConfigurePropertyInjectionForHandler 5.2
 
-            configuration.InitializeHandlerProperty<EmailHandler>("SmtpAddress", "10.0.1.233");
-            configuration.InitializeHandlerProperty<EmailHandler>("SmtpPort", 25);
+            busConfiguration.InitializeHandlerProperty<EmailHandler>("SmtpAddress", "10.0.1.233");
+            busConfiguration.InitializeHandlerProperty<EmailHandler>("SmtpPort", 25);
 
             #endregion
         }
@@ -26,7 +26,7 @@
 
             public void Handle(EmailMessage message)
             {
-                var client = new SmtpClient(SmtpAddress, SmtpPort);
+                SmtpClient client = new SmtpClient(SmtpAddress, SmtpPort);
                 // ...
             }
         }

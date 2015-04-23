@@ -11,9 +11,9 @@ public class DataBus
 
         #region FileShareDataBus
 
-        var configuration = new BusConfiguration();
+        BusConfiguration busConfiguration = new BusConfiguration();
 
-        configuration.UseDataBus<FileShareDataBus>()
+        busConfiguration.UseDataBus<FileShareDataBus>()
             .BasePath(databusPath);
 
         #endregion
@@ -23,29 +23,29 @@ public class DataBus
     {
         #region AzureDataBus
 
-        var configuration = new BusConfiguration();
+        BusConfiguration busConfiguration = new BusConfiguration();
 
-        configuration.UseDataBus<AzureDataBus>();
+        busConfiguration.UseDataBus<AzureDataBus>();
 
         #endregion
     }
 
     public void AzureDataBusConfiguration()
     {
-        var configuration = new BusConfiguration();
-        var azureStorageConnectionString = "";
-        var basePathWithinContainer = "";
-        var containerName = "";
-        var blockSize = 10;
-        var timeToLiveInSeconds = 1;
-        var maxNumberOfRetryAttempts = 3;
-        var numberOfIoThreads = 3; // number of parallel operations that may proceed.
+        BusConfiguration busConfiguration = new BusConfiguration();
+        string azureStorageConnectionString = "";
+        string basePathWithinContainer = "";
+        string containerName = "";
+        int blockSize = 10;
+        int timeToLiveInSeconds = 1;
+        int maxNumberOfRetryAttempts = 3;
+        int numberOfIoThreads = 3; // number of parallel operations that may proceed.
         // number of blocks that may be simultaneously uploaded when uploading a blob that is greater than the value specified by the 
-        var backOffIntervalBetweenRetriesInSecs = 1000;
+        int backOffIntervalBetweenRetriesInSecs = 1000;
 
         #region AzureDataBusConfiguration
 
-        configuration.UseDataBus<AzureDataBus>()
+        busConfiguration.UseDataBus<AzureDataBus>()
             .ConnectionString(azureStorageConnectionString)
             .Container(containerName)
             .BasePath(basePathWithinContainer)
@@ -85,11 +85,11 @@ namespace DataBusProperties
 
     public static class MessageConventions
     {
-        public static void DefineDataBusPropertiesConvention(BusConfiguration configuration)
+        public static void DefineDataBusPropertiesConvention(BusConfiguration busConfiguration)
         {
             #region DefineMessageWithLargePayloadUsingConvention
 
-            configuration.Conventions()
+            busConfiguration.Conventions()
                 .DefiningDataBusPropertiesAs(p => p.Name.EndsWith("DataBus"));
 
             #endregion
@@ -111,7 +111,7 @@ namespace CustomDataBusPluginSnippet
 
         public string Put( Stream stream, TimeSpan timeToBeReceived )
         {
-            using( var destination = File.OpenWrite( "blob.dat" ) )
+            using( FileStream destination = File.OpenWrite( "blob.dat" ) )
             {
                 stream.CopyTo( destination );
             }
@@ -131,8 +131,8 @@ namespace CustomDataBusPluginSnippet
         {
             #region PluginCustomDataBusV5 5
 
-            var configuration = new BusConfiguration();
-            configuration.UseDataBus(typeof(CustomDataBus));
+            BusConfiguration busConfiguration = new BusConfiguration();
+            busConfiguration.UseDataBus(typeof(CustomDataBus));
 
             #endregion
         }

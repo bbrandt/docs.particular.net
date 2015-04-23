@@ -2,7 +2,7 @@
 
 Before you start ensure you have
 
- *  Created a [GitHub account](https://github.com/signup/free)
+ *  Created a [GitHub account](https://github.com/join)
  *  Signed the Particular [Contributor License Agreement](http://www.particular.net/contributors-license-agreement-consent).
 
 There are two approaches to contributing.
@@ -21,7 +21,7 @@ For simple changes the GitHub web UI should suffice.
 
 For more complex changes you should fork and then submit a pull request. This is useful if you are proposing multiple file changes
 
- 1. [Fork](http://help.github.com/forking/) on GitHub.
+ 1. [Fork](https://help.github.com/forking/) on GitHub.
  1. Clone your fork locally.
  1. Work on your feature.
  1. Push the up to GitHub.
@@ -181,11 +181,28 @@ And checking `Ignore YAML Front-matter`
  * Samples should illustrate a feature or scenario with as few moving pieces as possible. For example if the sample is "illustrating IOC with MVC" then "adding signalr" to that sample will only cause confusion. In general the fewer nugets you need to get the point across the better.
  * Do not "document things inside a sample". A sample is "to show how something is used" not to document it. Instead update the appropriate documentation page and link to it. As a general rule if you add any content to a sample, where that guidance could possible be applicable to other samples, then that guidance should probably exist in a documentation page.
 
+### Bootstrapping a sample
+
+At the moment the best way to get started on a sample is to copy an existing one. Ideally one that has similarities to what you are trying to achieve. 
+
+A good sample to start with is the [Default Logging Sample](https://github.com/Particular/docs.particular.net/tree/master/samples/logging/default), since all it does is enable logging. You can then add the various moving pieces to your copy.
+
+### Screenshots
+
+Avoid using screen shots in sample unless it adds significant value over what can be expressed in text. The have the following problems 
+
+ * Screenshots are more time consuming to update than text
+ * Not search-able
+ * Are prone to resulting an in inconsistent feel as different people take screenshot at different sizes, different zoom levels and with different color schemes for the app in question
+ * Screenshots add significantly to the page load time. 
+
+The most common mis-use of screenshots it when capturing console output. DO NOT DO THIS. Put the text inside a formatted code section instead. 
+
 ## Code Snippets
 
 ### Defining Snippets
 
-There is a some code located here https://github.com/Particular/docs.particular.net/tree/master/Snippets. All `.cs`, `.xml` and `.config` files in that directory are parsed for code snippets
+There is a some code located here https://github.com/Particular/docs.particular.net/tree/master/Snippets. All `.cs`, `.xml`, `.sql` and `.config` files in that directory are parsed for code snippets
 
 #### Using comments
 
@@ -199,7 +216,7 @@ var configure = Configure.With();
 
 #### Using regions 
 
-Any code wrapped in a named C# region will pe picked up. The name of the region is used as the key. 
+Any code wrapped in a named C# region will be picked up. The name of the region is used as the key. 
 
 ```
 #region ConfigureWith
@@ -301,6 +318,23 @@ var configure = Configure.With()
 </pre>
 
 Note none of the tabs have been trimmed.
+
+### Why is explicit variable typing used instead of 'var'
+
+This is done for two reasons
+
+ 1. Since the snippets are viewing inline to a page they lack much of the context of a full code file such as using statements. To remove the ambiguity explicit variable declaration is being used
+ 2. It makes it much easier to build the docs search engine when the types being used on a page can be inferred by the snippets used. 
+
+This is enforced by Resharper rules.
+
+### Snippets are compiled
+
+The the code used by snippets and samples is compiled on the build server. The compilation is done against the versions of the packages referenced in the snippets project. When a snippet doesn't compile the build will break so snippets are compiling properly. Samples and snippets should not reference unreleased nugets.
+
+#### Unreleased nugets
+
+There are some scenarios where documentation may require unreleased or beta nugets. For example when creating a PR against documentation for a feature that is not yet released. In this case it is ok to that PR to reference an unreleased nuget and have that PR fail to build on the build server. Once the nugets have been released that PR can be merged.
 
 ## Alerts
 
@@ -446,7 +480,7 @@ It will also wrap the image in a clickable lightbox so the full image can be acc
  * Log4Net not log4net 
  * Intellisense	not intellisense
  * ServiceInsight not serviceInsight
- * Windows Azure Service Bus not windows azure servicebus
+ * Azure Service Bus not Azure servicebus
  * First Level Retries not First-Level-Retries
 
 ## More Info
@@ -455,7 +489,7 @@ It will also wrap the image in a clickable lightbox so the full image can be acc
 
 # Additional Resources
 
-* [General GitHub documentation](http://help.github.com/)
-* [GitHub pull request documentation](http://help.github.com/send-pull-requests/)
+* [General GitHub documentation](https://help.github.com/)
+* [GitHub pull request documentation](https://help.github.com/send-pull-requests/)
 * [Forking a Repo](https://help.github.com/articles/fork-a-repo)
 * [Using Pull Requests](https://help.github.com/articles/using-pull-requests)

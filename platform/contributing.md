@@ -10,7 +10,7 @@ need contributors to follow so that we can have a chance of keeping on top of th
 
 ## Getting Started
 
-* Make sure you have a [GitHub account](https://github.com/signup/free).
+* Make sure you have a [GitHub account](https://github.com/join).
 * [Find the repository](https://github.com/Particular/) that is relevant to what you want to contribute.
 * [Create an issue](https://help.github.com/articles/creating-an-issue/) in that repository, assuming one does not already exist.
   * Clearly describe the issue including steps to reproduce when it is a bug.
@@ -43,5 +43,5 @@ need contributors to follow so that we can have a chance of keeping on top of th
 
 # Additional Resources
 
-* [General GitHub documentation](http://help.github.com/)
+* [General GitHub documentation](https://help.github.com/)
 * [Using pull requests](https://help.github.com/articles/using-pull-requests/)

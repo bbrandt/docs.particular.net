@@ -7,9 +7,9 @@ public class SubscriptionSettings
     {
         #region DisableAutoSubscribe
 
-        var configuration = new BusConfiguration();
+        BusConfiguration busConfiguration = new BusConfiguration();
 
-        configuration.DisableFeature<AutoSubscribe>();
+        busConfiguration.DisableFeature<AutoSubscribe>();
 
         #endregion
     }

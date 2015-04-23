@@ -10,14 +10,14 @@ static class Program
         LogManager.Use<DefaultFactory>()
             .Level(LogLevel.Warn);
 
-        var configuration = new BusConfiguration();
-        configuration.EndpointName("Samples.ErrorHandling.WithoutSLR");
-        configuration.UseSerialization<JsonSerializer>();
-        configuration.UsePersistence<InMemoryPersistence>();
-        configuration.DisableFeature<SecondLevelRetries>();
-        configuration.EnableInstallers();
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.EndpointName("Samples.ErrorHandling.WithoutSLR");
+        busConfiguration.UseSerialization<JsonSerializer>();
+        busConfiguration.UsePersistence<InMemoryPersistence>();
+        busConfiguration.DisableFeature<SecondLevelRetries>();
+        busConfiguration.EnableInstallers();
 
-        using (var bus = Bus.Create(configuration))
+        using (IStartableBus bus = Bus.Create(busConfiguration))
         {
             bus.Start();
             Console.WriteLine("Press any key to send a message that will throw an exception.");
@@ -26,10 +26,10 @@ static class Program
             while (true)
             {
                 Console.ReadLine();
-                var m = new MyMessage
-                {
-                    Id = Guid.NewGuid()
-                };
+                MyMessage m = new MyMessage
+                              {
+                                  Id = Guid.NewGuid()
+                              };
                 bus.SendLocal(m);
             }
         }

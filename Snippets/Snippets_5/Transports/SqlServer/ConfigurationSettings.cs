@@ -6,8 +6,8 @@ public class SqlServerConfigurationSettings
     {
         #region sqlserver-config-transactionscope 2
 
-        var configuration = new BusConfiguration();
-        configuration.UseTransport<SqlServerTransport>();
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<SqlServerTransport>();
 
         #endregion
     }
@@ -16,9 +16,9 @@ public class SqlServerConfigurationSettings
     {
         #region sqlserver-config-native-transactions 2
 
-        var configuration = new BusConfiguration();
-        configuration.UseTransport<SqlServerTransport>();
-        configuration.Transactions()
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<SqlServerTransport>();
+        busConfiguration.Transactions()
             .DisableDistributedTransactions();
 
         #endregion
@@ -28,9 +28,9 @@ public class SqlServerConfigurationSettings
     {
         #region sqlserver-config-no-transactions 2
 
-        var configuration = new BusConfiguration();
-        configuration.UseTransport<SqlServerTransport>();
-        configuration.Transactions().Disable();
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<SqlServerTransport>();
+        busConfiguration.Transactions().Disable();
 
         #endregion
     }
@@ -39,21 +39,9 @@ public class SqlServerConfigurationSettings
     {
         #region sqlserver-config-disable-secondaries 2
 
-        var configuration = new BusConfiguration();
-        configuration.UseTransport<SqlServerTransport>()
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.UseTransport<SqlServerTransport>()
             .DisableCallbackReceiver();
-
-        #endregion
-    }
-
-    void SetSecondaryReceiverConcurrency()
-    {
-
-        #region sqlserver-config-set-secondary-concurrency 2
-
-        var configuration = new BusConfiguration();
-        configuration.UseTransport<SqlServerTransport>()
-            .CallbackReceiverMaxConcurrency(16);
 
         #endregion
     }
@@ -62,11 +50,10 @@ public class SqlServerConfigurationSettings
     {
         #region sqlserver-config-callbacks 2
 
-        var configuration = new BusConfiguration();
-        var bus = Bus.Create(configuration);
-        var callback = bus.Send(new Request());
+        BusConfiguration busConfiguration = new BusConfiguration();
+        IStartableBus bus = Bus.Create(busConfiguration);
+        ICallback callback = bus.Send(new Request());
         callback.Register(ProcessResponse);
-
         #endregion
 
         #region sqlserver-config-callbacks-reply 2

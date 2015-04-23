@@ -69,7 +69,7 @@ Backup*/
 UpgradeLog*.XML
 
 
-*storage*
+storage/
 
 
 ############
@@ -89,3 +89,5 @@ Fody/.DS_Store
 
 *.userprefs
 *.jtconfig
+
+*nsb_log*

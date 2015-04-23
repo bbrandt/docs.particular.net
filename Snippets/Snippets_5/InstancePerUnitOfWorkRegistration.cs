@@ -7,8 +7,8 @@ public class InstancePerUnitOfWorkRegistration
     {
         #region InstancePerUnitOfWorkRegistration
 
-        var configuration = new BusConfiguration();
-        configuration.RegisterComponents(c => c.ConfigureComponent<MyUnitOfWork>(DependencyLifecycle.InstancePerCall));
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.RegisterComponents(c => c.ConfigureComponent<MyUnitOfWork>(DependencyLifecycle.InstancePerCall));
 
         #endregion
     }

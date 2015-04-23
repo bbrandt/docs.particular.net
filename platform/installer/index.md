@@ -82,7 +82,7 @@ Installs the [ServiceControl Chocolatey Package](https://chocolatey.org/packages
 
 ## MSI Information
 
-* [MSI error messages](http://msdn.microsoft.com/en-us/library/aa376931.aspx)
+* [MSI error messages](https://msdn.microsoft.com/en-us/library/aa376931.aspx)
 
 ## Chocolatey Information 
 
@@ -103,11 +103,11 @@ See [Installing Chocolatey](https://github.com/chocolatey/chocolatey/wiki/Instal
 
 ## ClickOnce Information
 
-* [Troubleshooting ClickOnce Deployments](http://msdn.microsoft.com/en-us/library/fb94w1t5.aspx)
+* [Troubleshooting ClickOnce Deployments](https://msdn.microsoft.com/en-us/library/fb94w1t5.aspx)
 * [ClickOnce forum](https://social.msdn.microsoft.com/Forums/windows/en-US/home?forum=winformssetup)
 
 
 
 ### FAQ
 
-* If you're having issues with connectivity please see this post on how to set Chocolatey and NuGet up behind a proxy: https://escapologist.wordpress.com/2013/02/27/nuget-and-chocolatey-behind-a-proxy/
+* If you're having issues with connectivity please see this post on how to set Chocolatey and NuGet up behind a proxy: https://github.com/chocolatey/choco/wiki/Proxy-Settings-for-Chocolatey

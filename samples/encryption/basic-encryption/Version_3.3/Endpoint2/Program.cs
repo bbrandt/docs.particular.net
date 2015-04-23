@@ -6,13 +6,13 @@ class Program
 {
     static void Main()
     {
-        var configure = Configure.With();
-        configure.DefineEndpointName("EncryptionSampleEndpoint2");
+        Configure configure = Configure.With();
+        configure.DefineEndpointName("Samples.Encryption.Endpoint2");
         configure.DefaultBuilder();
         configure.RijndaelEncryptionService();
         configure.MsmqTransport();
         configure.InMemorySagaPersister();
-        configure.UseInMemoryTimeoutPersister();
+        configure.RunTimeoutManagerWithInMemoryPersistence();
         configure.InMemorySubscriptionStorage();
         configure.JsonSerializer();
         configure.UnicastBus()

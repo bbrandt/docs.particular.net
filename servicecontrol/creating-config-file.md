@@ -3,7 +3,6 @@ title: Customizing ServiceControl Configuration
 summary: How ServiceControl manages configuration and how to create and customize the ServiceControl configuration file.
 tags:
 - ServiceControl
-- Configuration
 ---
 
 ServiceControl allows you to create a configuration file with settings that override default settings.
@@ -87,15 +86,15 @@ You can configure ServiceControl to forward any consumed messages into alternate
 
 * `ServiceControl/ExpirationProcessTimerInSeconds` (int) 
 
-  The number of seconds to wait between checking for expired messages.  The default prior to version 1.4 was `60` (1 minute), the new default is `600` (10 minutes).  Settings the value to 0 will disable the expiration process, this is not recommended and it is only provided for fault finding.
+  The number of seconds to wait between checking for expired messages.  The default prior to version 1.4 was `60` (1 minute), the new default is `600` (10 minutes).  Settings the value to `0` will disable the expiration process, this is not recommended and it is only provided for fault finding.  Valid Range is `0` through to `10800` (3 Hours)
 
 * `ServiceControl/ExpirationProcessBatchSize` (int) , Default `65512`  
  
-  This setting was introduced in version 1.4. This minimum allowed value for this settings is 10240, there is no hardcoded maximum as this is heavily dependent on system performance.  
+  This setting was introduced in version 1.4. This minimum allowed value for this settings is `10240`, there is no hardcoded maximum as this is heavily dependent on system performance.  
 
 * `ServiceControl/HoursToKeepMessagesBeforeExpiring` (int)
 
-  The number of hours to keep a message for before it is deleted, Default `720` (30 days)
+  The number of hours to keep a message for before it is deleted, Default `720` (30 days). Valid Range is `24` (1 day) through to `1440` (60 days)
 
 * `ServiceControl/DbPath` (string)
 
@@ -107,7 +106,7 @@ You can configure ServiceControl to forward any consumed messages into alternate
 
 * `NServiceBus/Transport` (string)
 
-  The connection string for the transport.
+  The connection string for the transport. This setting should be placed in `connectionStrings` section of configuratoin file.
 
 * `ServiceBus/AuditQueue` (string)
 

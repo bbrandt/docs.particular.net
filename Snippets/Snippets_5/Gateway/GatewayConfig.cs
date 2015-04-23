@@ -7,9 +7,9 @@ public class GatewayConfig
     {
         #region GatewayConfiguration
 
-        var configuration = new BusConfiguration();
+        BusConfiguration busConfiguration = new BusConfiguration();
 
-        configuration.EnableFeature<Gateway>();
+        busConfiguration.EnableFeature<Gateway>();
 
         #endregion
 

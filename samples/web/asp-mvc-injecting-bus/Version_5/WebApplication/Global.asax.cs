@@ -14,22 +14,22 @@ namespace WebApplication
         protected void Application_Start()
         {
             #region ApplicationStart
-            var builder = new ContainerBuilder();
+            ContainerBuilder builder = new ContainerBuilder();
 
             // Register your MVC controllers.
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
             // Set the dependency resolver to be Autofac.
-            var container = builder.Build();
+            IContainer container = builder.Build();
 
-            var configuration = new BusConfiguration();
-            configuration.EndpointName("Samples.MvcInjection.WebApplication");
-            configuration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(container));
-            configuration.UseSerialization<JsonSerializer>();
-            configuration.UsePersistence<InMemoryPersistence>();
-            configuration.EnableInstallers();
+            BusConfiguration busConfiguration = new BusConfiguration();
+            busConfiguration.EndpointName("Samples.MvcInjection.WebApplication");
+            busConfiguration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(container));
+            busConfiguration.UseSerialization<JsonSerializer>();
+            busConfiguration.UsePersistence<InMemoryPersistence>();
+            busConfiguration.EnableInstallers();
 
-            bus = Bus.CreateSendOnly(configuration);
+            bus = Bus.CreateSendOnly(busConfiguration);
             
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 

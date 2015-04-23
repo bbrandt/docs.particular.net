@@ -1,23 +1,24 @@
-﻿using NServiceBus;
+﻿using NHibernate.Cfg;
+using NServiceBus;
 using NServiceBus.Persistence;
 
 public class ShareNHibernateConfiguration
 {
     public void Customize()
     {
-        BusConfiguration configuration = null;
+        BusConfiguration busConfiguration = null;
 
         #region OutboxShareNHibernateConfiguration
 
-        var hibernateConfiguration = BuildMyBusinessDataNHibernateConfiguration();
+        Configuration hibernateConfiguration = BuildMyBusinessDataNHibernateConfiguration();
 
-        configuration.UsePersistence<NHibernatePersistence>()
+        busConfiguration.UsePersistence<NHibernatePersistence>()
             .UseConfiguration(hibernateConfiguration);
 
         #endregion
     }
 
-    NHibernate.Cfg.Configuration BuildMyBusinessDataNHibernateConfiguration()
+    Configuration BuildMyBusinessDataNHibernateConfiguration()
     {
         // build and return your NHibernate Configuration here
         return null;

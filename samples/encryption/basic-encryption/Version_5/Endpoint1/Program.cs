@@ -6,14 +6,14 @@ class Program
 {
     static void Main()
     {
-        var busConfiguration = new BusConfiguration();
-        busConfiguration.EndpointName("EncryptionSampleEndpoint1");
-        busConfiguration.RijndaelEncryptionService("gdDbqRpqdRbTs3mhdZh9qCaDaxJXl+e6");
+        BusConfiguration busConfiguration = new BusConfiguration();
+        busConfiguration.EndpointName("Samples.Encryption.Endpoint1");
+        busConfiguration.RijndaelEncryptionService();
         busConfiguration.UsePersistence<InMemoryPersistence>();
-        var startableBus = Bus.Create(busConfiguration);
-        using (var bus = startableBus.Start())
+        IStartableBus startableBus = Bus.Create(busConfiguration);
+        using (IBus bus = startableBus.Start())
         {
-            var message = new MessageWithSecretData
+            MessageWithSecretData message = new MessageWithSecretData
                           {
                               Secret = "betcha can't guess my secret",
                               SubProperty = new MySecretSubProperty
@@ -32,7 +32,7 @@ class Program
                                                 }
                                             }
                           };
-            bus.Send("EncryptionSampleEndpoint2", message);
+            bus.Send("Samples.Encryption.Endpoint2", message);
 
             Console.WriteLine("MessageWithSecretData sent. Press any key to exit");
             Console.ReadLine();

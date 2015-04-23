@@ -7,20 +7,20 @@ class Program
 {
     static void Main()
     {
-        var configure = Configure.With();
-        configure.DefineEndpointName("EncryptionSampleEndpoint1");
+        Configure configure = Configure.With();
+        configure.DefineEndpointName("Samples.Encryption.Endpoint1");
         configure.DefaultBuilder();
         configure.RijndaelEncryptionService();
         configure.MsmqTransport();
         configure.InMemorySagaPersister();
-        configure.UseInMemoryTimeoutPersister();
+        configure.RunTimeoutManagerWithInMemoryPersistence();
         configure.InMemorySubscriptionStorage();
         configure.JsonSerializer();
-        var bus = configure.UnicastBus()
+        IBus bus = configure.UnicastBus()
             .CreateBus()
             .Start(() => Configure.Instance.ForInstallationOn<Windows>().Install());
 
-        var message = new MessageWithSecretData
+        MessageWithSecretData message = new MessageWithSecretData
                        {
                            Secret = "betcha can't guess my secret",
                            SubProperty = new MySecretSubProperty
@@ -39,7 +39,7 @@ class Program
                                              }
                                          }
                        };
-        bus.Send("EncryptionSampleEndpoint2", message);
+        bus.Send("Samples.Encryption.Endpoint2", message);
 
         Console.WriteLine("MessageWithSecretData sent. Press any key to exit");
         Console.ReadLine();
